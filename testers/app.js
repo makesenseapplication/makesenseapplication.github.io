@@ -95,7 +95,8 @@ async function apiCall(action, data = {}) {
     }
 
     try {
-        const response = await fetch(`${API_URL}?${params.toString()}`);
+        const url = API_URL.endsWith('/') ? API_URL : `${API_URL}/`;
+        const response = await fetch(`${url}?${params.toString()}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
