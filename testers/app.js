@@ -1,6 +1,6 @@
 // --- CONFIGURATION ---
 // IMPORTANT: Replace this with your deployed Google Apps Script Web App URL
-const API_URL = 'https://script.google.com/macros/s/AKfycbwxpNjWmqs4cp_5L1qmp9Ba5C1Uov0-dzlJMPWXi4vK054lZgR7hklC99xksTEC_DFqdQ/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbzCPi2ZOyYsUSWdMzdNfbirY4XCiNeeomXWgX0UYFxT32co7EWotwsrUJC3qK5ln7kOdw/exec';
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
