@@ -1,6 +1,6 @@
 // --- CONFIGURATION ---
-// IMPORTANT: Replace this with your deployed Google Apps Script Web App URL
-const API_URL = 'https://script.google.com/macros/s/AKfycbzCPi2ZOyYsUSWdMzdNfbirY4XCiNeeomXWgX0UYFxT32co7EWotwsrUJC3qK5ln7kOdw/exec';
+// IMPORTANT: Replace this with your deployed Cloudflare Worker URL
+const API_URL = 'https://testers-api.makesensedeveloper.workers.dev/';
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -84,56 +84,24 @@ async function loadTesters() {
     }
 }
 
-// --- JSONP API HELPER ---
-// Using JSONP to avoid CORS issues with Google Apps Script
-function apiCall(action, data = {}) {
-    return new Promise((resolve) => {
-        const uniqueId = 'api-' + Date.now() + '-' + Math.random().toString(36).substr(2, 8);
-        const scriptId = 'script-' + uniqueId;
-        const callbackName = 'jsonp_' + uniqueId.replace(/-/g, '_');
+// --- API HELPER ---
+// Now using standard fetch through Cloudflare Worker Proxy
+async function apiCall(action, data = {}) {
+    const params = new URLSearchParams();
+    params.append('action', action);
+    params.append('_', Date.now()); // Cache buster
+    for (const key in data) {
+        params.append(key, data[key]);
+    }
 
-        const params = new URLSearchParams();
-        params.append('action', action);
-        params.append('callback', callbackName);
-        params.append('_', Date.now()); // Cache buster to ensure fresh data
-        for (const key in data) {
-            params.append(key, data[key]);
+    try {
+        const response = await fetch(`${API_URL}?${params.toString()}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-
-        const cleanup = () => {
-            if (window[callbackName]) delete window[callbackName];
-            const scriptEl = document.getElementById(scriptId);
-            if (scriptEl) {
-                try {
-                    scriptEl.remove();
-                } catch (e) {
-                    if (scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl);
-                }
-            }
-        };
-
-        window[callbackName] = (response) => {
-            cleanup();
-            resolve(response);
-        };
-
-        const script = document.createElement('script');
-        script.id = scriptId;
-        script.src = `${API_URL}?${params.toString()}`;
-
-        script.onerror = () => {
-            cleanup();
-            resolve({ success: false, message: 'Network error' });
-        };
-
-        document.body.appendChild(script);
-
-        // Timeout after 20 seconds
-        setTimeout(() => {
-            if (window[callbackName]) {
-                cleanup();
-                resolve({ success: false, message: 'Request timeout' });
-            }
-        }, 20000);
-    });
+        return await response.json();
+    } catch (error) {
+        console.error('API Call failed:', error);
+        return { success: false, message: 'Connection error. Please try again.' };
+    }
 }
