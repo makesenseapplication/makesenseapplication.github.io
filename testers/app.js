@@ -95,6 +95,7 @@ function apiCall(action, data = {}) {
         const params = new URLSearchParams();
         params.append('action', action);
         params.append('callback', callbackName);
+        params.append('_', Date.now()); // Cache buster to ensure fresh data
         for (const key in data) {
             params.append(key, data[key]);
         }
