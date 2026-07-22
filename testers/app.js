@@ -1,6 +1,9 @@
 // --- CONFIGURATION ---
 // IMPORTANT: Replace this with your deployed Google Apps Script Web App URL
 const API_URL = 'https://script.google.com/macros/s/AKfycbwxpNjWmqs4cp_5L1qmp9Ba5C1Uov0-dzlJMPWXi4vK054lZgR7hklC99xksTEC_DFqdQ/exec';
+// --- CONFIGURATION ---
+// IMPORTANT: Replace this with your deployed Google Apps Script Web App URL
+const API_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -90,6 +93,21 @@ function apiCall(action, data = {}) {
     return new Promise((resolve, reject) => {
         const callbackName = 'callback_' + Math.round(100000 * Math.random());
         const script = document.createElement('script');
+        let isHandled = false;
+
+        const cleanup = () => {
+            if (isHandled) return;
+            isHandled = true;
+
+            if (window[callbackName]) delete window[callbackName];
+            if (script.parentNode) {
+                try {
+                    script.parentNode.removeChild(script);
+                } catch (e) {
+                    console.warn('Script removal failed:', e);
+                }
+            }
+        };
 
         const params = new URLSearchParams();
         params.append('action', action);
@@ -99,15 +117,13 @@ function apiCall(action, data = {}) {
         }
 
         window[callbackName] = (response) => {
-            delete window[callbackName];
-            if (script.parentNode) script.parentNode.removeChild(script);
+            cleanup();
             resolve(response);
         };
 
         script.src = `${API_URL}?${params.toString()}`;
         script.onerror = () => {
-            delete window[callbackName];
-            if (script.parentNode) script.parentNode.removeChild(script);
+            cleanup();
             reject(new Error('Network Error'));
         };
 
@@ -115,9 +131,8 @@ function apiCall(action, data = {}) {
 
         // Timeout after 20 seconds
         setTimeout(() => {
-            if (window[callbackName]) {
-                delete window[callbackName];
-                if (script.parentNode) script.parentNode.removeChild(script);
+            if (!isHandled) {
+                cleanup();
                 reject(new Error('Request Timeout'));
             }
         }, 20000);
