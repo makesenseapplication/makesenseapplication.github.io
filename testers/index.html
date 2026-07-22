@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="icon" href="/makesense.logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakeSense - Tester Sign-up</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <link rel="icon" href="/makesense.logo.png" type="image/x-icon">
+                <span>MakeSense</span>
+            </div>
+            <p class="tagline">Making Your Life Sensible</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Become a Beta Tester</h1>
+                <p>Help us make sense of the digital world. Sign up to test our upcoming applications and unlock premium access for free.</p>
+
+                <div class="signup-card">
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="name" placeholder="Enter your full name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Gmail Address</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" placeholder="example@gmail.com" required>
+                            </div>
+                            <small>Must be a Gmail account for Google Play Store access.</small>
+                        </div>
+                        <button type="submit" id="submitBtn" class="btn btn-primary">
+                            <span class="btn-text">SIGN UP AS TESTER</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                    <div id="message" class="message"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testers-list-section">
+            <div class="container">
+                <h2>Our Testing Community</h2>
+                <p class="subtitle">Join the group of experts helping us refine MakesenseTV and more.</p>
+
+                <div class="list-container">
+                    <div id="loading" class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Loading testers...</span>
+                    </div>
+                    <div id="testersList" class="testers-grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits">
+            <div class="container">
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <i class="fas fa-unlock-alt"></i>
+                        <h3>Premium Access</h3>
+                        <p>Get early and unlimited access to all premium features before they go public.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Zero Cost</h3>
+                        <p>No subscriptions or hidden fees. Our testers always enjoy free access.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-gift"></i>
+                        <h3>Giveaways</h3>
+                        <p>Be the first in line for our monthly rewards and digital giveaways.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 MakeSense. All rights reserved.</p>
+            <p class="footer-tagline">Make Sense of Your Digital Life</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
