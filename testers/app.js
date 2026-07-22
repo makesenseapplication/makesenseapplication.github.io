@@ -87,24 +87,10 @@ async function loadTesters() {
 // --- JSONP API HELPER ---
 // Using JSONP to avoid CORS issues with Google Apps Script
 function apiCall(action, data = {}) {
-    return new Promise((resolve, reject) => {
-        const callbackName = 'callback_' + Math.round(100000 * Math.random());
-        const script = document.createElement('script');
-        let isHandled = false;
-
-        const cleanup = () => {
-            if (isHandled) return;
-            isHandled = true;
-
-            if (window[callbackName]) delete window[callbackName];
-            if (script.parentNode) {
-                try {
-                    script.parentNode.removeChild(script);
-                } catch (e) {
-                    console.warn('Script removal failed:', e);
-                }
-            }
-        };
+    return new Promise((resolve) => {
+        const uniqueId = 'api-' + Date.now() + '-' + Math.random().toString(36).substr(2, 8);
+        const scriptId = 'script-' + uniqueId;
+        const callbackName = 'jsonp_' + uniqueId.replace(/-/g, '_');
 
         const params = new URLSearchParams();
         params.append('action', action);
@@ -113,24 +99,39 @@ function apiCall(action, data = {}) {
             params.append(key, data[key]);
         }
 
+        const cleanup = () => {
+            if (window[callbackName]) delete window[callbackName];
+            const scriptEl = document.getElementById(scriptId);
+            if (scriptEl) {
+                try {
+                    scriptEl.remove();
+                } catch (e) {
+                    if (scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl);
+                }
+            }
+        };
+
         window[callbackName] = (response) => {
             cleanup();
             resolve(response);
         };
 
+        const script = document.createElement('script');
+        script.id = scriptId;
         script.src = `${API_URL}?${params.toString()}`;
+
         script.onerror = () => {
             cleanup();
-            reject(new Error('Network Error'));
+            resolve({ success: false, message: 'Network error' });
         };
 
         document.body.appendChild(script);
 
         // Timeout after 20 seconds
         setTimeout(() => {
-            if (!isHandled) {
+            if (window[callbackName]) {
                 cleanup();
-                reject(new Error('Request Timeout'));
+                resolve({ success: false, message: 'Request timeout' });
             }
         }, 20000);
     });
