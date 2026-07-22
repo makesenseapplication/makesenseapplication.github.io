@@ -100,14 +100,14 @@ function apiCall(action, data = {}) {
 
         window[callbackName] = (response) => {
             delete window[callbackName];
-            document.body.removeChild(script);
+            if (script.parentNode) script.parentNode.removeChild(script);
             resolve(response);
         };
 
         script.src = `${API_URL}?${params.toString()}`;
         script.onerror = () => {
             delete window[callbackName];
-            document.body.removeChild(script);
+            if (script.parentNode) script.parentNode.removeChild(script);
             reject(new Error('Network Error'));
         };
 
@@ -117,7 +117,7 @@ function apiCall(action, data = {}) {
         setTimeout(() => {
             if (window[callbackName]) {
                 delete window[callbackName];
-                document.body.removeChild(script);
+                if (script.parentNode) script.parentNode.removeChild(script);
                 reject(new Error('Request Timeout'));
             }
         }, 20000);
