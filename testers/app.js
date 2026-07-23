@@ -57,30 +57,59 @@ function setupForm() {
     });
 }
 
+let allTesters = [];
+let visibleCount = 10;
+
 async function loadTesters() {
     const listElement = document.getElementById('testersList');
     const loadingElement = document.getElementById('loading');
+    const showMoreContainer = document.getElementById('showMoreContainer');
+    const showMoreBtn = document.getElementById('showMoreBtn');
 
     try {
         const result = await apiCall('getTesters');
 
         if (result.success && result.data.length > 0) {
+            allTesters = result.data;
             loadingElement.style.display = 'none';
-            listElement.innerHTML = result.data.map(tester => `
-                <div class="tester-item">
-                    <div class="tester-avatar">${tester.name[0]}</div>
-                    <div class="tester-info">
-                        <div class="tester-name">${tester.name}</div>
-                        <div class="tester-email">${tester.email}</div>
-                    </div>
-                </div>
-            `).join('');
+
+            renderTesters();
+
+            showMoreBtn.onclick = () => {
+                visibleCount += 10;
+                renderTesters();
+            };
         } else {
             loadingElement.innerHTML = '<i class="fas fa-users"></i> <span>Be the first tester to join!</span>';
+            showMoreContainer.style.display = 'none';
         }
     } catch (error) {
         console.error('Failed to load testers:', error);
         loadingElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> <span>Failed to load tester list.</span>';
+        showMoreContainer.style.display = 'none';
+    }
+}
+
+function renderTesters() {
+    const listElement = document.getElementById('testersList');
+    const showMoreContainer = document.getElementById('showMoreContainer');
+
+    const visibleTesters = allTesters.slice(0, visibleCount);
+
+    listElement.innerHTML = visibleTesters.map(tester => `
+        <div class="tester-item">
+            <div class="tester-avatar">${tester.name[0]}</div>
+            <div class="tester-info">
+                <div class="tester-name">${tester.name}</div>
+                <div class="tester-email">${tester.email}</div>
+            </div>
+        </div>
+    `).join('');
+
+    if (visibleCount < allTesters.length) {
+        showMoreContainer.style.display = 'block';
+    } else {
+        showMoreContainer.style.display = 'none';
     }
 }
 
