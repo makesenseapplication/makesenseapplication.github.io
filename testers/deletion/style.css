@@ -1,0 +1,32 @@
+.btn-danger {
+    background-color: var(--error);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+    transform: translateY(-2px);
+}
+
+.warning-box {
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    text-align: left;
+}
+
+.warning-box i {
+    color: var(--error);
+    margin-top: 3px;
+}
+
+.warning-box p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+}

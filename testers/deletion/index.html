@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="/makesense.logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakeSense - Delete Account Data</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>MakeSense</span>
+            </div>
+            <p class="tagline">Making Your Life Sensible</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Data Deletion Request</h1>
+                <p>We respect your privacy. Use this form to permanently remove your Gmail from our tester and Vanguard lists.</p>
+
+                <div class="signup-card deletion-card">
+                    <form id="deletionForm">
+                        <div class="form-group">
+                            <label for="email">Gmail Address</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" placeholder="example@gmail.com" required>
+                            </div>
+                            <small>Enter the Gmail used for testing to remove all associated data.</small>
+                        </div>
+                        <div class="warning-box">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>This action will immediately revoke your Vanguard (ad-free) status and remove you from the beta testing group.</p>
+                        </div>
+                        <button type="submit" id="submitBtn" class="btn btn-danger">
+                            <span class="btn-text">DELETE MY DATA</span>
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+                    <div id="message" class="message"></div>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <a href="../index.html" style="color: var(--text-muted); text-decoration: none; font-size: 14px;">
+                        <i class="fas fa-arrow-left"></i> Back to Tester Sign-up
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 MakeSense. All rights reserved.</p>
+            <p class="footer-tagline">Make Sense of Your Digital Life</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
