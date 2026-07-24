@@ -23,32 +23,42 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h1>Become a Beta Tester</h1>
-                <p>Help us make sense of the digital world. Sign up to test our upcoming applications and unlock premium access for free.</p>
+                <h1>Join the Makesense Vanguard</h1>
+                <p>Welcome to our early testing community! As a Vanguard member, you'll help shape the future of our applications and enjoy permanent ad-free access during the beta window.</p>
+                <div class="hero-actions">
+                    <button onclick="document.querySelector('.join-steps').scrollIntoView({behavior: 'smooth'})" class="btn btn-primary">
+                        START TESTING NOW <i class="fas fa-arrow-down"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
 
-                <div class="signup-card">
-                    <form id="signupForm">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-user"></i>
-                                <input type="text" id="name" placeholder="Enter your full name" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Gmail Address</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-envelope"></i>
-                                <input type="email" id="email" placeholder="example@gmail.com" required>
-                            </div>
-                            <small>Must be a Gmail account for Google Play Store access.</small>
-                        </div>
-                        <button type="submit" id="submitBtn" class="btn btn-primary">
-                            <span class="btn-text">SIGN UP AS TESTER</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </form>
-                    <div id="message" class="message"></div>
+        <section class="join-steps">
+            <div class="container">
+                <h2>How to Get Started</h2>
+                <div class="steps-grid">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <h3>Join Group</h3>
+                        <p>Join our <a href="https://groups.google.com/g/makesense-vanguard" target="_blank">Google Group</a> to get instant tester permissions on Google Play.</p>
+                        <a href="https://groups.google.com/g/makesense-vanguard" target="_blank" class="btn btn-secondary">JOIN VANGUARD GROUP</a>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <h3>Opt-in (Web)</h3>
+                        <p>Google requires you to "Accept" the testing invitation on the web before the Play Store allows download.</p>
+                        <a href="https://play.google.com/apps/testing/com.makesense.tv" target="_blank" class="btn btn-play-web">
+                            <i class="fas fa-globe"></i> BECOME A TESTER
+                        </a>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <h3>Download App</h3>
+                        <p>Install MakesenseTV directly from the Play Store. Sign in with your Gmail to unlock ad-free perks!</p>
+                        <a href="https://play.google.com/store/apps/details?id=com.makesense.tv" target="_blank" class="btn btn-play-store">
+                            <i class="fab fa-google-play"></i> GET IT ON PLAY STORE
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
